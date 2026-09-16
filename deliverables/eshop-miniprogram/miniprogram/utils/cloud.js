@@ -22,17 +22,36 @@ const uploadImage = (filePath, dir = 'goods') => {
   return wx.cloud.uploadFile({ cloudPath, filePath }).then((res) => res.fileID)
 }
 
-const chooseImage = (count = 1) => {
-  return new Promise((resolve, reject) => {
-    wx.chooseMedia({
-      count,
-      mediaType: ['image'],
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: (res) => resolve(res.tempFiles.map((f) => f.tempFilePath)),
-      fail: reject
+// 隐私协议授权：wx.chooseMedia 属于隐私接口，未处理会导致线上上传图片静默失败
+const ensurePrivacy = () =>
+  new Promise((resolve, reject) => {
+    if (!wx.getPrivacySetting) return resolve()
+    wx.getPrivacySetting({
+      success: (res) => {
+        if (!res.needAuthorization) return resolve()
+        wx.requirePrivacyAuthorize({
+          success: resolve,
+          fail: () => reject(new Error('需要同意隐私协议后才能上传图片'))
+        })
+      },
+      fail: () => resolve()
     })
   })
+
+const chooseImage = (count = 1) => {
+  return ensurePrivacy().then(
+    () =>
+      new Promise((resolve, reject) => {
+        wx.chooseMedia({
+          count,
+          mediaType: ['image'],
+          sizeType: ['compressed'],
+          sourceType: ['album', 'camera'],
+          success: (res) => resolve(res.tempFiles.map((f) => f.tempFilePath)),
+          fail: reject
+        })
+      })
+  )
 }
 
 module.exports = { call, uploadImage, chooseImage }
