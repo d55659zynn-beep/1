@@ -1,0 +1,53 @@
+.gcard {
+  position: relative;
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(31, 35, 41, 0.05);
+}
+
+.gcard__img {
+  width: 100%;
+  height: 320rpx;
+  display: block;
+  background: #eceef0;
+}
+
+.gcard__mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 6rpx 16rpx;
+  background: rgba(31, 35, 41, 0.55);
+  color: #fff;
+  font-size: 22rpx;
+}
+
+.gcard__body {
+  padding: 16rpx 20rpx 20rpx;
+}
+
+.gcard__title {
+  font-size: 28rpx;
+  color: #1f2329;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 88rpx;
+}
+
+.gcard__origin {
+  margin-left: 10rpx;
+  color: #b0b5bb;
+  font-size: 24rpx;
+  text-decoration: line-through;
+}
+
+.gcard__add {
+  padding: 8rpx 26rpx;
+  border-radius: 26rpx;
+  background: #e0533d;
+  color: #fff;
+  font-size: 24rpx;
+}

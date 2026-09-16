@@ -1,0 +1,33 @@
+<view class="page">
+  <view class="topbar">
+    <input class="topbar__search" placeholder="搜索商品标题" value="{{keyword}}" bindinput="onSearch" />
+    <view class="topbar__add" bindtap="onCreate">+ 发布</view>
+  </view>
+
+  <view class="tabs">
+    <view class="tabs__item {{status === 'all' ? 'on' : ''}}" data-key="all" bindtap="onTab">全部</view>
+    <view class="tabs__item {{status === 'on' ? 'on' : ''}}" data-key="on" bindtap="onTab">在售</view>
+    <view class="tabs__item {{status === 'off' ? 'on' : ''}}" data-key="off" bindtap="onTab">已下架</view>
+  </view>
+
+  <view class="card goods" wx:for="{{list}}" wx:key="_id">
+    <image class="goods__img" src="{{item.cover}}" mode="aspectFill" />
+    <view class="goods__body">
+      <view class="goods__title">{{item.title}}</view>
+      <view class="goods__meta">
+        <text class="price">{{item.price / 100}}</text>
+        <text class="muted">库存 {{item.stock}} · 售 {{item.sales || 0}}</text>
+      </view>
+      <view class="goods__ops">
+        <text class="tag {{item.status === 'on' ? '' : 'tag--off'}}">{{item.status === 'on' ? '在售' : '已下架'}}</text>
+        <view class="op" data-id="{{item._id}}" bindtap="onEdit">编辑</view>
+        <view class="op" data-id="{{item._id}}" data-status="{{item.status}}" bindtap="onToggle">
+          {{item.status === 'on' ? '下架' : '上架'}}
+        </view>
+        <view class="op op--danger" data-id="{{item._id}}" bindtap="onRemove">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{!list.length}}">还没有商品，点右上角「发布」上架第一个商品</view>
+</view>

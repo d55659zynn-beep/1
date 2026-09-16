@@ -1,0 +1,37 @@
+.page {
+  display: flex;
+  height: 100vh;
+}
+
+.side {
+  width: 180rpx;
+  background: #eceef0;
+}
+
+.side__item {
+  padding: 32rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+  color: #5f646b;
+}
+
+.side__item--on {
+  background: #fff;
+  color: #e0533d;
+  font-weight: 600;
+}
+
+.main {
+  flex: 1;
+  padding: 20rpx;
+}
+
+.main__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.main__cell {
+  width: calc(50% - 10rpx);
+}

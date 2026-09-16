@@ -1,0 +1,15 @@
+<view class="gcard" bindtap="onTap">
+  <image class="gcard__img" src="{{item.cover}}" mode="aspectFill" lazy-load />
+  <view wx:if="{{item.status === 'off'}}" class="gcard__mask">已下架</view>
+  <view class="gcard__body">
+    <view class="gcard__title">{{item.title}}</view>
+    <view class="row between">
+      <view>
+        <text class="price">{{item.price / 100}}</text>
+        <text class="gcard__origin" wx:if="{{item.marketPrice}}">¥{{item.marketPrice / 100}}</text>
+      </view>
+      <view class="muted" wx:if="{{!showAdd}}">库存 {{item.stock}} · 销量 {{item.sales || 0}}</view>
+      <view wx:else class="gcard__add" catchtap="onAdd">加入</view>
+    </view>
+  </view>
+</view>

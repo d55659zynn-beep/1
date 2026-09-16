@@ -1,0 +1,98 @@
+.page {
+  padding: 20rpx 24rpx 160rpx;
+}
+
+.addr {
+  padding: 8rpx 28rpx;
+  margin-bottom: 20rpx;
+}
+
+.addr__row {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 2rpx solid #f2f4f6;
+}
+
+.addr__row:last-child {
+  border-bottom: none;
+}
+
+.addr__label {
+  width: 150rpx;
+  color: #5f646b;
+  font-size: 28rpx;
+}
+
+.addr__input {
+  flex: 1;
+  font-size: 28rpx;
+}
+
+.list {
+  padding: 8rpx 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.list__item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 2rpx solid #f2f4f6;
+}
+
+.list__item:last-child {
+  border-bottom: none;
+}
+
+.list__img {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 12rpx;
+  background: #eceef0;
+  margin-right: 16rpx;
+}
+
+.list__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.list__title {
+  font-size: 28rpx;
+  margin-bottom: 10rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.note {
+  padding: 24rpx 28rpx;
+}
+
+.note__input {
+  font-size: 28rpx;
+}
+
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 24rpx calc(16rpx + env(safe-area-inset-bottom));
+  background: #fff;
+  border-top: 2rpx solid #eceef0;
+}
+
+.bar__btn {
+  padding: 0 48rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 40rpx;
+  background: #e0533d;
+  color: #fff;
+  font-size: 30rpx;
+}

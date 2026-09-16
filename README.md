@@ -44,9 +44,21 @@
 - 浏览器预览：`deliverables/liquid-glass-button/preview.html`
 - 接入文档：`deliverables/liquid-glass-button/README.md`
 
----
+## 四、本次追加：电商小程序 MVP 与 iOS 原型
 
-## 三、本次会话归档
+- `deliverables/eshop-miniprogram/`：可运行的电商小程序骨架（73 个文件），含商家后台上架商品流程，详见该目录下的 `README.md`
+- `deliverables/prototypes/eshop-ios-prototype.html`：iPhone 15 Pro Max 高保真原型（暗色玻璃拟态 + 霓虹渐变，底部导航固底）
+- `deliverables/prototypes/pelican-cycling.html`：SVG 鹈鹕骑自行车 2D 动画
+- `CHANGELOG.md`：每次交付后的更新记录
+
+## 五、工具脚本
+
+- `tools/upload-to-github.ps1`：用 PAT 走 GitHub REST API 推送（git 直连被代理拦截时的替代方案）
+- `tools/push-via-git.ps1`：免 PAT，用 git + 浏览器授权推送
+- `tools/sync-to-github.ps1`：增量同步本目录到指定仓库（供日常更新与自动化任务调用）
+- `tools/gen_icons.py`：生成小程序 tabBar 图标
+
+---
 
 `docs/对话记录.md` 为完整对话（含每一轮的需求澄清与结论），`tools/upload-to-github.ps1` 是本仓库的上传脚本（通过 GitHub REST API，便于在受限网络环境使用）。
 
@@ -55,10 +67,13 @@
 ```
 .
 ├── README.md                 # 本文件
+├── CHANGELOG.md              # 更新日志
 ├── docs/
 │   ├── 对话记录.md            # 完整对话记录
 │   └── diagrams/             # 三张架构图（SVG）
 └── deliverables/
     ├── 小程序架构设计-电商云开发版.md
-    └── liquid-glass-button/  # 双端组件 + 预览页 + 接入文档
+    ├── liquid-glass-button/  # 双端组件 + 预览页 + 接入文档
+    ├── eshop-miniprogram/    # 可运行的电商小程序 MVP
+    └── prototypes/           # HTML 高保真原型
 ```

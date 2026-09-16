@@ -1,0 +1,73 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/category/index",
+    "pages/cart/index",
+    "pages/mine/index"
+  ],
+  "subpackages": [
+    {
+      "root": "subpackages/trade",
+      "name": "trade",
+      "pages": [
+        "pages/product/index",
+        "pages/confirm/index",
+        "pages/pay-result/index",
+        "pages/orders/index"
+      ]
+    },
+    {
+      "root": "subpackages/admin",
+      "name": "admin",
+      "pages": [
+        "pages/goods-list/index",
+        "pages/goods-edit/index"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/index/index": { "network": "all", "packages": ["trade"] },
+    "pages/mine/index": { "network": "wifi", "packages": ["admin"] }
+  },
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "好物小店",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f5f6f8"
+  },
+  "tabBar": {
+    "color": "#8a8f98",
+    "selectedColor": "#e0533d",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/tabbar/home.png",
+        "selectedIconPath": "assets/tabbar/home-on.png"
+      },
+      {
+        "pagePath": "pages/category/index",
+        "text": "分类",
+        "iconPath": "assets/tabbar/category.png",
+        "selectedIconPath": "assets/tabbar/category-on.png"
+      },
+      {
+        "pagePath": "pages/cart/index",
+        "text": "购物车",
+        "iconPath": "assets/tabbar/cart.png",
+        "selectedIconPath": "assets/tabbar/cart-on.png"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "text": "我的",
+        "iconPath": "assets/tabbar/mine.png",
+        "selectedIconPath": "assets/tabbar/mine-on.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

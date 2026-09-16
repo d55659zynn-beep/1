@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "goods-card": "/components/goods-card/index"
+  },
+  "enablePullDownRefresh": true,
+  "navigationBarTitleText": "好物小店"
+}

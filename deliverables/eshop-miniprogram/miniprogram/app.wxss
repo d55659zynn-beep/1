@@ -1,0 +1,91 @@
+page {
+  background: #f5f6f8;
+  color: #1f2329;
+  font-size: 28rpx;
+  line-height: 1.6;
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+.container {
+  padding: 24rpx;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(31, 35, 41, 0.05);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.between {
+  justify-content: space-between;
+}
+
+.muted {
+  color: #8a8f98;
+  font-size: 24rpx;
+}
+
+.price {
+  color: #e0533d;
+  font-size: 36rpx;
+  font-weight: 600;
+}
+
+.price::before {
+  content: "¥";
+  font-size: 24rpx;
+  margin-right: 2rpx;
+}
+
+.btn {
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  border-radius: 44rpx;
+  background: #e0533d;
+  color: #fff;
+  font-size: 30rpx;
+}
+
+.btn--ghost {
+  background: #fff;
+  color: #e0533d;
+  border: 2rpx solid #e0533d;
+}
+
+.btn--disabled {
+  background: #d8dbdf;
+  color: #fff;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2rpx 12rpx;
+  border-radius: 6rpx;
+  background: #fdeceb;
+  color: #e0533d;
+  font-size: 22rpx;
+}
+
+.tag--off {
+  background: #eceef0;
+  color: #8a8f98;
+}
+
+.empty {
+  padding: 120rpx 0;
+  text-align: center;
+  color: #8a8f98;
+}
+
+.divider {
+  height: 2rpx;
+  background: #eceef0;
+  margin: 20rpx 0;
+}

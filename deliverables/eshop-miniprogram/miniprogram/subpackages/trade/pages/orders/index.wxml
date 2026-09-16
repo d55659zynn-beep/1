@@ -1,0 +1,33 @@
+<view class="page">
+  <view class="tabs">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="key"
+      class="tabs__item {{active === item.key ? 'tabs__item--on' : ''}}"
+      data-key="{{item.key}}"
+      bindtap="onTab"
+    >{{item.name}}</view>
+  </view>
+
+  <view class="card order" wx:for="{{list}}" wx:key="_id">
+    <view class="row between order__head">
+      <text class="muted">订单号 {{item.orderNo}}</text>
+      <text class="order__status">{{item.statusText}}</text>
+    </view>
+    <view class="order__item" wx:for="{{item.items}}" wx:for-item="g" wx:key="productId">
+      <image class="order__img" src="{{g.cover}}" mode="aspectFill" />
+      <view class="order__goods">
+        <view class="order__title">{{g.title}}</view>
+        <view class="muted">× {{g.quantity}}</view>
+      </view>
+      <view class="price">{{g.price / 100}}</view>
+    </view>
+    <view class="order__foot">
+      <text class="muted">合计</text>
+      <text class="price">{{item.total / 100}}</text>
+      <view class="order__btn" wx:if="{{item.status === 'unpaid'}}" data-id="{{item._id}}" bindtap="onCancel">取消订单</view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{!list.length}}">暂无订单</view>
+</view>

@@ -1,0 +1,9 @@
+{
+  "name": "product",
+  "version": "1.0.0",
+  "description": "商品列表/详情/商家后台增删改与上下架",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

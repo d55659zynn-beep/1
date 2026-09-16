@@ -1,0 +1,37 @@
+{
+  "description": "电商小程序 MVP：云开发 + 原生框架",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "showES6CompileOption": false,
+    "useCompilerPlugins": false,
+    "ignoreUploadUnusedFiles": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.5.5",
+  "appid": "touristappid",
+  "projectname": "eshop-miniprogram",
+  "cloudfunctionRoot": "cloudfunctions/",
+  "miniprogramRoot": "miniprogram/",
+  "condition": {}
+}

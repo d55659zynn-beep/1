@@ -1,0 +1,65 @@
+<view class="page">
+  <view class="card block">
+    <view class="label">商品图片（第一张作为封面，最多 6 张）</view>
+    <view class="imgs">
+      <view class="imgs__item" wx:for="{{images}}" wx:key="*this">
+        <image class="imgs__img" src="{{item}}" mode="aspectFill" />
+        <view class="imgs__del" data-index="{{index}}" bindtap="onRemoveImage">×</view>
+      </view>
+      <view class="imgs__add" wx:if="{{images.length < 6}}" bindtap="onChooseImage">+</view>
+    </view>
+  </view>
+
+  <view class="card block">
+    <view class="field">
+      <text class="field__label">商品标题</text>
+      <input class="field__input" placeholder="例如：云南高山小粒咖啡 250g" value="{{form.title}}" data-field="title" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <text class="field__label">副标题</text>
+      <input class="field__input" placeholder="选填，展示在标题下方" value="{{form.subtitle}}" data-field="subtitle" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <text class="field__label">售价（元）</text>
+      <input class="field__input" type="digit" placeholder="0.00" value="{{form.priceYuan}}" data-field="priceYuan" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <text class="field__label">划线价</text>
+      <input class="field__input" type="digit" placeholder="选填，原价" value="{{form.marketYuan}}" data-field="marketYuan" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <text class="field__label">库存</text>
+      <input class="field__input" type="number" placeholder="0" value="{{form.stock}}" data-field="stock" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <text class="field__label">分类</text>
+      <picker range="{{cats}}" range-key="name" value="{{categoryIndex}}" bindchange="onCategory">
+        <view class="field__input">{{cats[categoryIndex].name}}</view>
+      </picker>
+    </view>
+    <view class="field field--last">
+      <text class="field__label">排序</text>
+      <input class="field__input" type="number" placeholder="数字越大越靠前" value="{{form.sort}}" data-field="sort" bindinput="onInput" />
+    </view>
+  </view>
+
+  <view class="card block">
+    <view class="label">商品详情</view>
+    <textarea
+      class="textarea"
+      placeholder="介绍规格、产地、物流等信息"
+      value="{{form.description}}"
+      data-field="description"
+      bindinput="onInput"
+      maxlength="-1"
+      auto-height
+    />
+  </view>
+
+  <view class="card block switch-row">
+    <text>保存后立即上架</text>
+    <switch checked="{{form.status === 'on'}}" color="#e0533d" bindchange="onStatus" />
+  </view>
+
+  <view class="btn save" bindtap="onSave">保存</view>
+</view>

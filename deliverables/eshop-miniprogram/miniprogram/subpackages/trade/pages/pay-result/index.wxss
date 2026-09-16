@@ -1,0 +1,40 @@
+.page {
+  padding: 80rpx 60rpx;
+  text-align: center;
+}
+
+.icon {
+  width: 120rpx;
+  height: 120rpx;
+  margin: 0 auto 32rpx;
+  border-radius: 50%;
+  border: 6rpx solid #1f2329;
+}
+
+.icon--ok {
+  border-color: #34a853;
+}
+
+.icon--fail {
+  border-color: #b0b5bb;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.desc {
+  color: #5f646b;
+  font-size: 26rpx;
+  margin-bottom: 12rpx;
+}
+
+.btn {
+  margin-top: 40rpx;
+}
+
+.btn--ghost {
+  margin-top: 24rpx;
+}

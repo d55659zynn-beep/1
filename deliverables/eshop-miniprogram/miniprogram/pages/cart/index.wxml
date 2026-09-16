@@ -1,0 +1,32 @@
+<view class="page">
+  <view wx:if="{{list.length}}">
+    <view class="card item" wx:for="{{list}}" wx:key="_id">
+      <view class="item__check {{item.checked ? 'item__check--on' : ''}}" data-id="{{item._id}}" bindtap="onToggle"></view>
+      <image class="item__img" src="{{item.cover}}" mode="aspectFill" />
+      <view class="item__info">
+        <view class="item__title">{{item.title}}</view>
+        <view class="row between">
+          <text class="price">{{item.price / 100}}</text>
+          <view class="stepper">
+            <view class="stepper__btn" data-id="{{item._id}}" bindtap="onMinus">-</view>
+            <view class="stepper__num">{{item.quantity}}</view>
+            <view class="stepper__btn" data-id="{{item._id}}" bindtap="onPlus">+</view>
+          </view>
+        </view>
+      </view>
+      <view class="item__del" data-id="{{item._id}}" bindtap="onRemove">删除</view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    购物车是空的
+    <view class="btn btn--ghost empty__btn" bindtap="goHome">去逛逛</view>
+  </view>
+
+  <view class="bar" wx:if="{{list.length}}">
+    <view class="bar__total">
+      合计 <text class="price">{{total / 100}}</text>
+    </view>
+    <view class="bar__btn" bindtap="goConfirm">去结算（{{count}}）</view>
+  </view>
+</view>

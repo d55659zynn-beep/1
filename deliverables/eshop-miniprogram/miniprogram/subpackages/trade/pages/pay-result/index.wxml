@@ -1,0 +1,9 @@
+<view class="page">
+  <view class="icon {{ok ? 'icon--ok' : 'icon--fail'}}"></view>
+  <view class="title">{{ok ? '支付成功' : '支付未完成'}}</view>
+  <view class="desc" wx:if="{{msg}}">{{msg}}</view>
+  <view class="desc muted" wx:if="{{orderId}}">订单号 {{orderId}}</view>
+
+  <view class="btn" bindtap="goOrders">查看订单</view>
+  <view class="btn btn--ghost" bindtap="goHome">返回首页</view>
+</view>

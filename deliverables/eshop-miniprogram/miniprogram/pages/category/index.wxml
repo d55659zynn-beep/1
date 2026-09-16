@@ -1,0 +1,20 @@
+<view class="page">
+  <scroll-view class="side" scroll-y>
+    <view
+      wx:for="{{cats}}"
+      wx:key="id"
+      class="side__item {{activeId === item.id ? 'side__item--on' : ''}}"
+      data-id="{{item.id}}"
+      bindtap="onTap"
+    >{{item.name}}</view>
+  </scroll-view>
+
+  <scroll-view class="main" scroll-y>
+    <view class="main__grid" wx:if="{{list.length}}">
+      <view class="main__cell" wx:for="{{list}}" wx:key="_id">
+        <goods-card item="{{item}}" bind:tap="onCardTap" />
+      </view>
+    </view>
+    <view class="empty" wx:else>该分类暂无商品</view>
+  </scroll-view>
+</view>

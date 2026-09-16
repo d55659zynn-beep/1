@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>好物小店 · iOS 高保真原型</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ['Inter', '-apple-system', 'PingFang SC', 'sans-serif'] },
+            colors: { ink: '#07070a', panel: '#0d0d12', line: 'rgba(255,255,255,.08)' }
+          }
+        }
+      }
+    </script>
+    <style>
+      * { -webkit-tap-highlight-color: transparent; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: #05050a;
+        color: #fff;
+        font-family: Inter, -apple-system, 'PingFang SC', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        overflow-x: hidden;
+      }
+      /* 环境光 */
+      .ambient {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(60% 50% at 20% 12%, rgba(79, 124, 255, 0.16), transparent 70%),
+          radial-gradient(50% 45% at 82% 26%, rgba(168, 85, 247, 0.14), transparent 70%),
+          radial-gradient(55% 45% at 55% 92%, rgba(34, 211, 238, 0.1), transparent 70%);
+      }
+      .ambient::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        background-size: 26px 26px;
+      }
+
+      /* iPhone 15 Pro Max 外壳 */
+      .phone {
+        position: relative;
+        transform-origin: center top;
+        will-change: transform;
+      }
+      .phone__frame {
+        position: relative;
+        width: 430px;
+        height: 932px;
+        padding: 12px;
+        border-radius: 66px;
+        background: linear-gradient(150deg, #4c4f56 0%, #23252a 22%, #6a6d75 50%, #1c1e22 78%, #55585f 100%);
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.09),
+          0 40px 90px rgba(0, 0, 0, 0.75),
+          0 0 90px rgba(99, 102, 241, 0.16),
+          inset 0 0 2px rgba(255, 255, 255, 0.35);
+      }
+      .phone__frame::before,
+      .phone__frame::after {
+        content: '';
+        position: absolute;
+        right: -3px;
+        width: 3px;
+        border-radius: 4px;
+        background: linear-gradient(180deg, #7c8088, #2a2c31);
+      }
+      .phone__frame::before { top: 210px; height: 86px; }        /* 电源键 */
+      .phone__frame::after { top: 320px; height: 140px; }        /* 音量键 */
+
+      .screen {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 54px;
+        overflow: hidden;
+        background: #07070a;
+        display: flex;
+        flex-direction: column;
+        isolation: isolate;
+      }
+      .screen::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(70% 40% at 15% -5%, rgba(79, 124, 255, 0.22), transparent 65%),
+          radial-gradient(60% 38% at 95% 8%, rgba(217, 70, 239, 0.16), transparent 65%);
+        z-index: 0;
+      }
+
+      /* 状态栏 & 灵动岛 */
+      .statusbar {
+        position: relative;
+        z-index: 30;
+        height: 54px;
+        padding: 16px 30px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+      }
+      .island {
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 124px;
+        height: 34px;
+        border-radius: 22px;
+        background: #000;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+        z-index: 40;
+      }
+      .island::after {
+        content: '';
+        position: absolute;
+        right: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 35%, #2b3350, #05070d 70%);
+        box-shadow: 0 0 6px rgba(120, 160, 255, 0.35);
+      }
+
+      /* 内容区 */
+      .content {
+        position: relative;
+        z-index: 10;
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 6px 20px 132px;
+        scrollbar-width: none;
+      }
+      .content::-webkit-scrollbar { display: none; }
+
+      /* 毛玻璃 */
+      .glass {
+        background: linear-gradient(158deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025));
+        backdrop-filter: blur(22px) saturate(170%);
+        -webkit-backdrop-filter: blur(22px) saturate(170%);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 10px 34px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+      }
+      .glass--strong {
+        background: linear-gradient(158deg, rgba(20, 20, 28, 0.86), rgba(10, 10, 16, 0.78));
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+      }
+      .grad-text {
+        background: linear-gradient(92deg, #7dd3fc 0%, #a78bfa 45%, #f472b6 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .glow { box-shadow: 0 0 26px rgba(139, 92, 246, 0.45), 0 0 60px rgba(34, 211, 238, 0.16); }
+      .hairline { border: 1px solid rgba(255, 255, 255, 0.07); }
+
+      /* 商品缩略图 */
+      .thumb {
+        position: relative;
+        height: 132px;
+        border-radius: 20px;
+        overflow: hidden;
+        background: radial-gradient(120% 120% at 20% 15%, var(--c1), var(--c2) 78%);
+      }
+      .thumb::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.35));
+      }
+      .thumb i {
+        position: absolute;
+        right: 12px;
+        bottom: 10px;
+        font-size: 44px;
+        color: rgba(255, 255, 255, 0.22);
+        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+      }
+
+      /* 底部导航栏（固底，不溢出外壳） */
+      .tabbar {
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        height: 78px;
+        border-radius: 34px;
+        display: flex;
+        align-items: center;
+        z-index: 60;
+      }
+      .tab {
+        flex: 1;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 10.5px;
+        font-weight: 500;
+        transition: color 0.25s;
+      }
+      .tab i { font-size: 19px; transition: transform 0.25s, filter 0.25s; }
+      .tab.on { color: #fff; }
+      .tab.on i {
+        transform: translateY(-2px) scale(1.06);
+        filter: drop-shadow(0 0 8px rgba(167, 139, 250, 0.9));
+        background: linear-gradient(92deg, #7dd3fc, #a78bfa, #f472b6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .tab.on::before {
+        content: '';
+        position: absolute;
+        margin-top: -2px;
+        width: 30px;
+        height: 3px;
+        border-radius: 3px;
+        background: linear-gradient(90deg, #7dd3fc, #f472b6);
+        box-shadow: 0 0 12px rgba(167, 139, 250, 0.9);
+        transform: translateY(-22px);
+      }
+      .tab .dot {
+        position: absolute;
+        top: 12px;
+        margin-left: 20px;
+        min-width: 17px;
+        height: 17px;
+        padding: 0 4px;
+        border-radius: 9px;
+        background: linear-gradient(135deg, #fb7185, #f472b6);
+        color: #fff;
+        font-size: 10px;
+        line-height: 17px;
+        text-align: center;
+        box-shadow: 0 0 12px rgba(244, 114, 182, 0.7);
+      }
+
+      /* 详情页抽屉 */
+      .sheet {
+        position: absolute;
+        inset: 0;
+        z-index: 70;
+        background: #07070a;
+        transform: translateY(100%);
+        transition: transform 0.42s cubic-bezier(0.32, 0.72, 0, 1);
+        display: flex;
+        flex-direction: column;
+      }
+      .sheet.open { transform: translateY(0); }
+
+      /* 提示条 */
+      .toast {
+        position: absolute;
+        left: 50%;
+        bottom: 116px;
+        transform: translate(-50%, 20px);
+        opacity: 0;
+        pointer-events: none;
+        z-index: 90;
+        padding: 12px 22px;
+        border-radius: 999px;
+        font-size: 13.5px;
+        white-space: nowrap;
+        transition: all 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+      }
+      .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(14px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .fade-up { animation: fadeUp 0.45s cubic-bezier(0.32, 0.72, 0, 1) both; }
+      @keyframes pulseGlow {
+        0%, 100% { opacity: 0.55; }
+        50% { opacity: 1; }
+      }
+      .pulse { animation: pulseGlow 2.4s ease-in-out infinite; }
+      .press:active { transform: scale(0.965); }
+      .press { transition: transform 0.16s; }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { scrollbar-width: none; }
+
+      @media (max-width: 480px) {
+        body { padding: 0; align-items: flex-start; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="ambient"></div>
+
+    <div class="phone" id="phone">
+      <div class="phone__frame">
+        <div class="screen">
+          <div class="island"></div>
+
+          <div class="statusbar">
+            <div id="clock">9:41</div>
+            <div class="flex items-center gap-1.5 text-[13px]">
+              <i class="fa-solid fa-signal"></i>
+              <i class="fa-solid fa-wifi"></i>
+              <i class="fa-solid fa-battery-full"></i>
+            </div>
+          </div>
+
+          <main class="content no-scrollbar" id="content"></main>
+
+          <!-- 商品详情抽屉 -->
+          <section class="sheet" id="sheet"></section>
+
+          <!-- 底部导航（固底） -->
+          <nav class="tabbar glass glass--strong" id="tabbar"></nav>
+
+          <div class="toast glass glass--strong" id="toast"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* ---------- 数据 ---------- */
+      const cats = [
+        { id: 'all', name: '全部', icon: 'fa-layer-group' },
+        { id: 'coffee', name: '咖啡', icon: 'fa-mug-hot' },
+        { id: 'digital', name: '数码', icon: 'fa-headphones-simple' },
+        { id: 'home', name: '家居', icon: 'fa-couch' },
+        { id: 'audio', name: '影音', icon: 'fa-music' },
+        { id: 'outdoor', name: '户外', icon: 'fa-mountain' }
+      ]
+
+      const products = [
+        { id: 1, name: '极光无线降噪耳机', sub: '自适应降噪 · 40h 续航', price: 799, old: 999, c1: '#8b5cf6', c2: '#f472b6', icon: 'fa-headphones-simple', sales: 3421, tag: '热卖', cat: 'digital' },
+        { id: 2, name: '云雾拿铁手冲咖啡豆', sub: '云南高山 · 中深烘焙', price: 89, old: 129, c1: '#6d5efc', c2: '#22d3ee', icon: 'fa-mug-hot', sales: 1280, tag: '新品', cat: 'coffee' },
+        { id: 3, name: '液态硅胶磁吸电源', sub: '10000mAh · 20W 快充', price: 199, old: 259, c1: '#22d3ee', c2: '#4f7cff', icon: 'fa-bolt', sales: 876, tag: '', cat: 'digital' },
+        { id: 4, name: '穹顶氛围投影灯', sub: '星河模式 · 无线遥控', price: 349, old: 429, c1: '#f472b6', c2: '#8b5cf6', icon: 'fa-lightbulb', sales: 532, tag: '限量', cat: 'home' },
+        { id: 5, name: '钛金属智能手环', sub: '血氧心率 · 14 天续航', price: 1299, old: 1499, c1: '#4f7cff', c2: '#8b5cf6', icon: 'fa-stopwatch', sales: 214, tag: '新品', cat: 'digital' },
+        { id: 6, name: '冷萃随行保温杯', sub: '316 不锈钢 · 24h 锁温', price: 129, old: 169, c1: '#22d3ee', c2: '#a78bfa', icon: 'fa-wind', sales: 1902, tag: '', cat: 'outdoor' }
+      ]
+
+      const state = { tab: 'home', cat: 'all', cart: [], liked: new Set(), current: null }
+
+      const $ = (id) => document.getElementById(id)
+      const money = (n) => '<span class="text-[13px]">¥</span>' + n
+
+      /* ---------- 组件片段 ---------- */
+      function productCard(p) {
+        const liked = state.liked.has(p.id)
+        return `
+        <div class="glass rounded-[26px] p-3 press fade-up" data-open="${p.id}">
+          <div class="thumb" style="--c1:${p.c1};--c2:${p.c2}">
+            <i class="fa-solid ${p.icon}"></i>
+            ${p.tag ? `<span class="absolute left-2.5 top-2.5 z-10 rounded-full bg-black/45 px-2.5 py-1 text-[10.5px] backdrop-blur-md">${p.tag}</span>` : ''}
+            <button class="absolute right-2.5 top-2.5 z-10 grid h-8 w-8 place-items-center rounded-full bg-black/35 backdrop-blur-md" data-like="${p.id}">
+              <i class="fa-${liked ? 'solid' : 'regular'} fa-heart text-[13px]" style="color:${liked ? '#fb7185' : 'rgba(255,255,255,.75)'}"></i>
+            </button>
+          </div>
+          <div class="mt-3 px-1 pb-1">
+            <div class="truncate text-[13.5px] font-semibold">${p.name}</div>
+            <div class="mt-1 truncate text-[11px] text-white/40">${p.sub}</div>
+            <div class="mt-2.5 flex items-center justify-between">
+              <div>
+                <span class="grad-text text-[17px] font-bold">${money(p.price)}</span>
+                <span class="ml-1.5 text-[11px] text-white/30 line-through">¥${p.old}</span>
+              </div>
+              <button class="grid h-8 w-8 place-items-center rounded-full bg-white/10 press" data-add="${p.id}">
+                <i class="fa-solid fa-plus text-[12px]"></i>
+              </button>
+            </div>
+          </div>
+        </div>`
+      }
+
+      /* ---------- 页面 ---------- */
+      function homeScreen() {
+        const list = products.filter((p) => state.cat === 'all' || p.cat === state.cat)
+        return `
+        <div class="fade-up">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-[12px] text-white/40">Welcome back</div>
+              <div class="mt-0.5 text-[22px] font-bold tracking-tight">发现<span class="grad-text">好物</span></div>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <button class="glass relative grid h-11 w-11 place-items-center rounded-2xl press">
+                <i class="fa-regular fa-bell text-[15px]"></i>
+                <span class="absolute right-3 top-3 h-1.5 w-1.5 rounded-full bg-pink-400 shadow-[0_0_8px_#f472b6]"></span>
+              </button>
+              <div class="h-11 w-11 rounded-2xl bg-gradient-to-br from-indigo-400 via-violet-500 to-fuchsia-500 p-[1.5px]">
+                <div class="h-full w-full rounded-2xl bg-[#0b0b12]"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass mt-5 flex items-center gap-3 rounded-2xl px-4 py-3.5">
+            <i class="fa-solid fa-magnifying-glass text-[14px] text-white/45"></i>
+            <input class="flex-1 bg-transparent text-[13.5px] outline-none placeholder:text-white/30" placeholder="搜索商品、品牌或分类" />
+            <div class="rounded-lg bg-white/10 px-2 py-1 text-[10px] text-white/50">⌘K</div>
+          </div>
+
+          <div class="glass relative mt-5 overflow-hidden rounded-[28px] p-5">
+            <div class="absolute -right-8 -top-10 h-40 w-40 rounded-full bg-fuchsia-500/25 blur-3xl pulse"></div>
+            <div class="absolute -bottom-12 -left-6 h-36 w-36 rounded-full bg-cyan-400/20 blur-3xl pulse"></div>
+            <div class="relative">
+              <span class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[10.5px] text-white/70">限时首发</span>
+              <div class="mt-3 text-[26px] font-bold leading-tight">
+                极光系列<br /><span class="grad-text">声临其境</span>
+              </div>
+              <div class="mt-1.5 text-[12px] text-white/45">新品直降 200 元 · 仅限本周</div>
+              <button class="mt-4 rounded-full bg-white px-5 py-2.5 text-[13px] font-semibold text-black press glow">立即查看</button>
+            </div>
+          </div>
+
+          <div class="no-scrollbar -mx-5 mt-5 flex gap-2.5 overflow-x-auto px-5">
+            ${cats
+              .map(
+                (c) => `
+              <button class="shrink-0 rounded-2xl px-4 py-2.5 text-[12.5px] press ${
+                state.cat === c.id
+                  ? 'bg-gradient-to-r from-cyan-400/90 via-violet-500/90 to-fuchsia-500/90 text-white shadow-[0_6px_20px_rgba(139,92,246,.45)]'
+                  : 'glass text-white/55'
+              }" data-cat="${c.id}">
+                <i class="fa-solid ${c.icon} mr-1.5 text-[11px]"></i>${c.name}
+              </button>`
+              )
+              .join('')}
+          </div>
+
+          <div class="glass mt-5 flex items-center justify-between rounded-[26px] p-4">
+            <div class="flex items-center gap-3">
+              <div class="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-rose-500 to-orange-400 shadow-[0_0_18px_rgba(251,113,133,.5)]">
+                <i class="fa-solid fa-fire text-[16px]"></i>
+              </div>
+              <div>
+                <div class="text-[13.5px] font-semibold">限时秒杀</div>
+                <div class="text-[11px] text-white/40">每满 100 减 20</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5" id="countdown">
+              ${['02', '18', '46']
+                .map(
+                  (n, i) =>
+                    `<span class="rounded-lg bg-white/10 px-2 py-1 text-[13px] font-semibold tabular-nums" data-cd="${i}">${n}</span>`
+                )
+                .join('<span class="text-white/30">:</span>')}
+            </div>
+          </div>
+
+          <div class="mt-6 grid grid-cols-2 gap-3.5">
+            ${list.map(productCard).join('') || '<div class="col-span-2 py-10 text-center text-[13px] text-white/35">该分类暂无商品</div>'}
+          </div>
+        </div>`
+      }
+
+      function categoryScreen() {
+        return `
+        <div class="fade-up">
+          <div class="text-[22px] font-bold tracking-tight">全部分类</div>
+          <div class="mt-1.5 text-[12px] text-white/40">共 ${products.length} 件在售商品</div>
+          <div class="mt-5 grid grid-cols-2 gap-3.5">
+            ${cats
+              .filter((c) => c.id !== 'all')
+              .map(
+                (c) => `
+              <div class="glass rounded-[26px] p-4 press" data-cat="${c.id}">
+                <div class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-indigo-500/80 to-fuchsia-500/80 shadow-[0_6px_18px_rgba(139,92,246,.35)]">
+                  <i class="fa-solid ${c.icon} text-[17px]"></i>
+                </div>
+                <div class="mt-3.5 text-[14px] font-semibold">${c.name}</div>
+                <div class="text-[11px] text-white/40">${products.filter((p) => p.cat === c.id).length} 件商品</div>
+              </div>`
+              )
+              .join('')}
+          </div>
+          <div class="mt-6 grid grid-cols-2 gap-3.5">
+            ${products.slice(0, 2).map(productCard).join('')}
+          </div>
+        </div>`
+      }
+
+      function cartScreen() {
+        if (!state.cart.length) {
+          return `
+          <div class="fade-up">
+            <div class="text-[22px] font-bold tracking-tight">购物车</div>
+            <div class="mt-24 flex flex-col items-center">
+              <div class="grid h-24 w-24 place-items-center rounded-full glass">
+                <i class="fa-solid fa-cart-shopping text-[28px] text-white/25"></i>
+              </div>
+              <div class="mt-5 text-[14px] text-white/50">购物车还是空的</div>
+              <button class="mt-6 rounded-full bg-white px-6 py-3 text-[13.5px] font-semibold text-black press" data-tab="home">去挑好物</button>
+            </div>
+          </div>`
+        }
+        const total = state.cart.reduce((s, i) => s + i.price * i.qty, 0)
+        return `
+        <div class="fade-up">
+          <div class="flex items-center justify-between">
+            <div class="text-[22px] font-bold tracking-tight">购物车</div>
+            <button class="text-[12px] text-white/40 press" data-clear>清空</button>
+          </div>
+          <div class="mt-5 space-y-3">
+            ${state.cart
+              .map(
+                (i) => `
+              <div class="glass flex items-center gap-3 rounded-[24px] p-3">
+                <div class="thumb !h-20 !w-20 !rounded-2xl" style="--c1:${i.c1};--c2:${i.c2};flex:0 0 80px">
+                  <i class="fa-solid ${i.icon} !text-[26px]"></i>
+                </div>
+                <div class="min-w-0 flex-1">
+                  <div class="truncate text-[13.5px] font-semibold">${i.name}</div>
+                  <div class="mt-0.5 text-[11px] text-white/40">${i.sub}</div>
+                  <div class="mt-2 flex items-center justify-between">
+                    <span class="grad-text text-[15px] font-bold">${money(i.price)}</span>
+                    <div class="flex items-center gap-3">
+                      <button class="grid h-7 w-7 place-items-center rounded-full bg-white/10 press" data-minus="${i.id}"><i class="fa-solid fa-minus text-[10px]"></i></button>
+                      <span class="w-4 text-center text-[13px] font-semibold tabular-nums">${i.qty}</span>
+                      <button class="grid h-7 w-7 place-items-center rounded-full bg-white/10 press" data-plus="${i.id}"><i class="fa-solid fa-plus text-[10px]"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>`
+              )
+              .join('')}
+          </div>
+
+          <div class="glass mt-5 rounded-[26px] p-4">
+            <div class="flex items-center justify-between text-[12.5px] text-white/55">
+              <span>商品合计</span><span>¥${total}</span>
+            </div>
+            <div class="mt-2 flex items-center justify-between text-[12.5px] text-white/55">
+              <span>运费</span><span class="text-emerald-300">免运费</span>
+            </div>
+            <div class="my-3 h-px bg-white/10"></div>
+            <div class="flex items-center justify-between">
+              <span class="text-[12.5px] text-white/55">应付</span>
+              <span class="grad-text text-[20px] font-bold">${money(total)}</span>
+            </div>
+          </div>
+
+          <button class="mt-4 w-full rounded-2xl bg-gradient-to-r from-cyan-400 via-violet-500 to-fuchsia-500 py-4 text-[15px] font-semibold press glow">
+            去结算（${state.cart.reduce((s, i) => s + i.qty, 0)}）
+          </button>
+        </div>`
+      }
+
+      function mineScreen() {
+        const menus = [
+          { icon: 'fa-bag-shopping', label: '我的订单', hint: '3 个待收货', color: 'from-sky-400 to-indigo-500' },
+          { icon: 'fa-ticket', label: '优惠券', hint: '2 张可用', color: 'from-fuchsia-500 to-rose-400' },
+          { icon: 'fa-location-dot', label: '收货地址', hint: '', color: 'from-emerald-400 to-cyan-500' },
+          { icon: 'fa-shield-halved', label: '账号与安全', hint: '', color: 'from-violet-500 to-purple-500' },
+          { icon: 'fa-gear', label: '设置', hint: '', color: 'from-slate-400 to-slate-500' }
+        ]
+        return `
+        <div class="fade-up">
+          <div class="glass rounded-[30px] p-5">
+            <div class="flex items-center gap-4">
+              <div class="h-16 w-16 rounded-[22px] bg-gradient-to-br from-cyan-400 via-violet-500 to-fuchsia-500 p-[2px]">
+                <div class="grid h-full w-full place-items-center rounded-[20px] bg-[#0b0b12]">
+                  <i class="fa-regular fa-user text-[22px]"></i>
+                </div>
+              </div>
+              <div class="flex-1">
+                <div class="text-[17px] font-bold">微信用户</div>
+                <div class="mt-0.5 text-[11.5px] text-white/40">ID 尾号 8F3A21 · 普通会员</div>
+              </div>
+              <button class="grid h-9 w-9 place-items-center rounded-xl bg-white/10 press">
+                <i class="fa-solid fa-pen text-[12px]"></i>
+              </button>
+            </div>
+            <div class="mt-5 grid grid-cols-3 gap-2">
+              ${[
+                ['收藏', state.liked.size],
+                ['优惠券', 2],
+                ['积分', 1280]
+              ]
+                .map(
+                  ([k, v]) =>
+                    `<div class="rounded-2xl bg-white/[0.05] py-3 text-center"><div class="text-[17px] font-bold">${v}</div><div class="mt-0.5 text-[11px] text-white/40">${k}</div></div>`
+                )
+                .join('')}
+            </div>
+          </div>
+
+          <div class="glass mt-4 overflow-hidden rounded-[26px]">
+            ${menus
+              .map(
+                (m, idx) => `
+              <div class="flex items-center gap-3.5 px-4 py-4 press ${idx < menus.length - 1 ? 'border-b border-white/[0.06]' : ''}">
+                <div class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br ${m.color} shadow-[0_4px_14px_rgba(0,0,0,.35)]">
+                  <i class="fa-solid ${m.icon} text-[13px]"></i>
+                </div>
+                <div class="flex-1 text-[13.5px]">${m.label}</div>
+                ${m.hint ? `<div class="text-[11.5px] text-white/35">${m.hint}</div>` : ''}
+                <i class="fa-solid fa-chevron-right text-[11px] text-white/25"></i>
+              </div>`
+              )
+              .join('')}
+          </div>
+
+          <div class="glass mt-4 rounded-[26px] p-4">
+            <div class="flex items-center gap-3">
+              <div class="grid h-10 w-10 place-items-center rounded-xl bg-white/10"><i class="fa-solid fa-store text-[14px]"></i></div>
+              <div class="flex-1">
+                <div class="text-[13.5px] font-semibold">商家后台</div>
+                <div class="text-[11px] text-white/40">上架 / 下架 / 编辑商品</div>
+              </div>
+              <span class="rounded-full bg-emerald-400/15 px-2.5 py-1 text-[10.5px] text-emerald-300">已开通</span>
+            </div>
+          </div>
+        </div>`
+      }
+
+      /* ---------- 详情抽屉 ---------- */
+      function openSheet(id) {
+        const p = products.find((x) => x.id === Number(id))
+        if (!p) return
+        state.current = p
+        $('sheet').innerHTML = `
+          <div class="statusbar">
+            <button class="glass grid h-10 w-10 place-items-center rounded-2xl press" data-close>
+              <i class="fa-solid fa-chevron-left text-[13px]"></i>
+            </button>
+            <div class="flex items-center gap-3">
+              <button class="glass grid h-10 w-10 place-items-center rounded-2xl press"><i class="fa-solid fa-arrow-up-from-bracket text-[13px]"></i></button>
+              <button class="glass grid h-10 w-10 place-items-center rounded-2xl press"><i class="fa-regular fa-heart text-[13px]"></i></button>
+            </div>
+          </div>
+          <div class="relative mx-5 mt-2 overflow-hidden rounded-[32px]">
+            <div class="thumb !h-[300px] !rounded-[32px]" style="--c1:${p.c1};--c2:${p.c2}">
+              <i class="fa-solid ${p.icon} !text-[90px] !bottom-8 !right-8"></i>
+            </div>
+          </div>
+          <div class="flex-1 overflow-y-auto no-scrollbar px-5 pb-40 pt-5">
+            <div class="flex items-end justify-between">
+              <div>
+                <div class="grad-text text-[30px] font-bold leading-none">${money(p.price)}</div>
+                <div class="mt-1.5 text-[12px] text-white/35 line-through">¥${p.old}</div>
+              </div>
+              <span class="rounded-full bg-white/[0.07] px-3 py-1.5 text-[11px] text-white/55">已售 ${p.sales}</span>
+            </div>
+            <div class="mt-3.5 text-[19px] font-bold leading-snug">${p.name}</div>
+            <div class="mt-1.5 text-[12.5px] text-white/45">${p.sub}</div>
+            <div class="mt-5 grid grid-cols-3 gap-2.5">
+              ${[
+                ['fa-truck', '顺丰包邮'],
+                ['fa-shield-halved', '正品保障'],
+                ['fa-rotate-left', '7 天无理由']
+              ]
+                .map(
+                  ([ic, t]) =>
+                    `<div class="glass flex flex-col items-center gap-1.5 rounded-2xl py-3.5"><i class="fa-solid ${ic} text-[14px] text-white/70"></i><span class="text-[10.5px] text-white/50">${t}</span></div>`
+                )
+                .join('')}
+            </div>
+            <div class="mt-6 text-[13px] font-semibold">商品详情</div>
+            <p class="mt-2 text-[12.5px] leading-7 text-white/45">
+              采用航空级材质与精密工艺，配合自研算法调校，在轻量化与耐用性之间取得平衡。
+              支持全场景智能联动，开箱即用，适配主流设备与系统。
+            </p>
+          </div>
+          <div class="absolute bottom-[104px] left-5 right-5 flex gap-3">
+            <button class="glass grid h-14 w-14 place-items-center rounded-2xl press" data-add="${p.id}">
+              <i class="fa-solid fa-cart-plus text-[17px]"></i>
+            </button>
+            <button class="h-14 flex-1 rounded-2xl bg-gradient-to-r from-cyan-400 via-violet-500 to-fuchsia-500 text-[15px] font-semibold press glow" data-add="${p.id}" data-buy="1">
+              立即购买
+            </button>
+          </div>`
+        $('sheet').classList.add('open')
+      }
+
+      /* ---------- 交互 ---------- */
+      function toast(msg) {
+        const t = $('toast')
+        t.textContent = msg
+        t.classList.add('show')
+        clearTimeout(t._timer)
+        t._timer = setTimeout(() => t.classList.remove('show'), 1800)
+      }
+
+      const tabs = [
+        { key: 'home', label: '首页', icon: 'fa-house' },
+        { key: 'category', label: '分类', icon: 'fa-layer-group' },
+        { key: 'cart', label: '购物车', icon: 'fa-cart-shopping' },
+        { key: 'mine', label: '我的', icon: 'fa-user' }
+      ]
+
+      function renderTabbar() {
+        const count = state.cart.reduce((s, i) => s + i.qty, 0)
+        $('tabbar').innerHTML = tabs
+          .map(
+            (t) => `
+          <button class="tab ${state.tab === t.key ? 'on' : ''} press" data-tab="${t.key}">
+            <i class="fa-solid ${t.icon}"></i>
+            <span>${t.label}</span>
+            ${t.key === 'cart' && count ? `<span class="dot">${count}</span>` : ''}
+          </button>`
+          )
+          .join('')
+      }
+
+      function render() {
+        const map = { home: homeScreen, category: categoryScreen, cart: cartScreen, mine: mineScreen }
+        $('content').innerHTML = map[state.tab]()
+        renderTabbar()
+      }
+
+      function addToCart(id) {
+        const p = products.find((x) => x.id === Number(id))
+        if (!p) return
+        const exist = state.cart.find((i) => i.id === p.id)
+        if (exist) exist.qty += 1
+        else state.cart.push({ id: p.id, name: p.name, sub: p.sub, price: p.price, c1: p.c1, c2: p.c2, icon: p.icon, qty: 1 })
+        toast('已加入购物车')
+        if (state.tab === 'cart') render()
+        else renderTabbar()
+      }
+
+      /* 事件委托 */
+      document.addEventListener('click', (e) => {
+        const t = e.target.closest('[data-open],[data-add],[data-like],[data-cat],[data-tab],[data-plus],[data-minus],[data-clear],[data-close]')
+        if (!t) return
+        const d = t.dataset
+
+        if (d.open) return openSheet(d.open)
+        if (d.add) return addToCart(d.add)
+        if (d.like) {
+          const id = Number(d.like)
+          state.liked.has(id) ? state.liked.delete(id) : state.liked.add(id)
+          return render()
+        }
+        if (d.cat) {
+          state.cat = d.cat
+          state.tab = 'home'
+          return render()
+        }
+        if (d.tab) {
+          state.tab = d.tab
+          return render()
+        }
+        if (d.plus) {
+          const item = state.cart.find((i) => i.id === Number(d.plus))
+          if (item) item.qty += 1
+          return render()
+        }
+        if (d.minus) {
+          const item = state.cart.find((i) => i.id === Number(d.minus))
+          if (item && --item.qty <= 0) state.cart = state.cart.filter((i) => i.id !== item.id)
+          return render()
+        }
+        if (d.clear !== undefined) {
+          state.cart = []
+          return render()
+        }
+        if (d.close !== undefined) return $('sheet').classList.remove('open')
+      })
+
+      /* 秒杀倒计时 */
+      let left = 2 * 3600 + 18 * 60 + 46
+      setInterval(() => {
+        left = left > 0 ? left - 1 : 0
+        const h = String(Math.floor(left / 3600)).padStart(2, '0')
+        const m = String(Math.floor((left % 3600) / 60)).padStart(2, '0')
+        const s = String(left % 60).padStart(2, '0')
+        ;[h, m, s].forEach((v, i) => {
+          const el = document.querySelector(`[data-cd="${i}"]`)
+          if (el) el.textContent = v
+        })
+      }, 1000)
+
+      /* 时钟 */
+      const now = new Date()
+      $('clock').textContent = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`
+
+      /* 自适应缩放：保证完整装进视口 */
+      function fit() {
+        const scale = Math.min(1, (window.innerHeight - 48) / 932, (window.innerWidth - 24) / 430)
+        $('phone').style.transform = `scale(${scale})`
+        document.body.style.height = 932 * scale + 48 + 'px'
+      }
+      window.addEventListener('resize', fit)
+      fit()
+      render()
+    </script>
+  </body>
+</html>
