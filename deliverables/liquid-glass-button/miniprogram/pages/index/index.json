@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "backgroundColor": "#667eea",
+  "usingComponents": {
+    "liquid-glass-button": "/components/liquid-glass-button/index"
+  }
+}

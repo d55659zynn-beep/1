@@ -1,0 +1,43 @@
+<view
+  class="lgb {{disabled ? 'lgb--disabled' : ''}}"
+  style="width:{{size}}rpx;height:{{size}}rpx;border-radius:{{radius}}rpx;transform:scale({{active ? pressScale : 1}})"
+  bindtouchstart="_onDown"
+  bindtouchend="_onUp"
+  bindtouchcancel="_onUp"
+  bindtap="_onTap"
+>
+  <!-- 1. 假毛玻璃：把背景图放大后二次模糊，兼容不支持 backdrop-filter 的安卓内核 -->
+  <image
+    wx:if="{{bgSrc}}"
+    class="lgb__blur"
+    src="{{bgSrc}}"
+    mode="aspectFill"
+    style="filter:blur({{blur}}px);-webkit-filter:blur({{blur}}px)"
+  />
+  <view
+    wx:else
+    class="lgb__blur lgb__blur--color"
+    style="filter:blur({{blur}}px);-webkit-filter:blur({{blur}}px)"
+  />
+
+  <!-- 2. 真毛玻璃层：iOS / 支持的 WebView 生效，自动压在假模糊之上 -->
+  <view
+    class="lgb__frost"
+    style="-webkit-backdrop-filter:blur({{blur}}px);backdrop-filter:blur({{blur}}px)"
+  />
+
+  <!-- 3. 液态高光：整圈旋转的扫光 -->
+  <view
+    wx:if="{{highlight}}"
+    class="lgb__sheen"
+    style="animation-duration:{{sheenDuration}}s"
+  />
+
+  <!-- 4. 1rpx 白色描边 + 内高光 -->
+  <view class="lgb__rim" />
+
+  <!-- 5. 内容插槽 -->
+  <view class="lgb__content">
+    <slot />
+  </view>
+</view>

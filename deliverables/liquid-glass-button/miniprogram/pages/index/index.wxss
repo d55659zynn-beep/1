@@ -1,0 +1,65 @@
+.page {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    #667eea 0%,
+    #764ba2 35%,
+    #f093fb 70%,
+    #f5576c 100%
+  );
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0.04)
+  );
+  border: 1rpx solid rgba(255, 255, 255, 0.15);
+  animation-name: bubble-float;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes bubble-float {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(30rpx, -40rpx) scale(1.15);
+  }
+}
+
+.row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 46%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row > * + * {
+  margin-left: 40rpx;
+}
+
+.row--wide {
+  top: 60%;
+}
+
+.btn-text {
+  font-size: 40rpx;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.btn-text--lg {
+  font-size: 32rpx;
+  letter-spacing: 2rpx;
+}

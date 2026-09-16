@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" width="100%" role="img">
+<title>页面结构与分包策略</title>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<g font-family="system-ui, -apple-system, PingFang SC, Microsoft YaHei, sans-serif">
+<rect x="40" y="40" width="600" height="150" rx="20" fill="#0C447C" stroke="#B5D4F4" stroke-width="0.5"/>
+<text x="60" y="66" font-size="14" dominant-baseline="central" fill="#B5D4F4">主包 ≤ 1.5MB · 启动即载（tabBar 页）</text>
+<rect x="60" y="86" width="130" height="56" rx="8" fill="#185FA5" stroke="#85B7EB" stroke-width="0.5"/>
+<text x="125" y="106" font-size="14" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB">首页</text>
+<text x="125" y="126" font-size="12" text-anchor="middle" dominant-baseline="central" fill="#85B7EB">爆款+活动入口</text>
+<rect x="205" y="86" width="130" height="56" rx="8" fill="#185FA5" stroke="#85B7EB" stroke-width="0.5"/>
+<text x="270" y="106" font-size="14" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB">分类</text>
+<text x="270" y="126" font-size="12" text-anchor="middle" dominant-baseline="central" fill="#85B7EB">快速找货</text>
+<rect x="350" y="86" width="130" height="56" rx="8" fill="#185FA5" stroke="#85B7EB" stroke-width="0.5"/>
+<text x="415" y="106" font-size="14" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB">购物车</text>
+<text x="415" y="126" font-size="12" text-anchor="middle" dominant-baseline="central" fill="#85B7EB">凑单提醒</text>
+<rect x="495" y="86" width="130" height="56" rx="8" fill="#185FA5" stroke="#85B7EB" stroke-width="0.5"/>
+<text x="560" y="106" font-size="14" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB">我的</text>
+<text x="560" y="126" font-size="12" text-anchor="middle" dominant-baseline="central" fill="#85B7EB">资产·订单入口</text>
+<line x1="185" y1="190" x2="185" y2="216" stroke="#AFA9EC" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="495" y1="190" x2="495" y2="216" stroke="#AFA9EC" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="40" y="218" width="290" height="142" rx="16" fill="#26215C" stroke="#CECBF6" stroke-width="0.5"/>
+<text x="60" y="244" font-size="14" dominant-baseline="central" fill="#CECBF6">交易分包（首访预加载）</text>
+<text x="60" y="272" font-size="12" dominant-baseline="central" fill="#AFA9EC">商品详情 · SKU 选择</text>
+<text x="60" y="296" font-size="12" dominant-baseline="central" fill="#AFA9EC">确认订单 · 支付结果</text>
+<text x="60" y="320" font-size="12" dominant-baseline="central" fill="#AFA9EC">订单中心 · 退款售后</text>
+<rect x="350" y="218" width="290" height="142" rx="16" fill="#26215C" stroke="#CECBF6" stroke-width="0.5"/>
+<text x="370" y="244" font-size="14" dominant-baseline="central" fill="#CECBF6">营销分包（按需加载）</text>
+<text x="370" y="272" font-size="12" dominant-baseline="central" fill="#AFA9EC">拼团 · 砍价活动页</text>
+<text x="370" y="296" font-size="12" dominant-baseline="central" fill="#AFA9EC">优惠券 · 分享海报</text>
+<text x="370" y="320" font-size="12" dominant-baseline="central" fill="#AFA9EC">会员中心 · 积分商城</text>
+</g>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 480" width="100%" role="img">
+<title>电商小程序总体架构</title>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<g font-family="system-ui, -apple-system, PingFang SC, Microsoft YaHei, sans-serif">
+<rect x="40" y="40" width="135" height="44" rx="8" fill="#185FA5" stroke="#85B7EB" stroke-width="0.5"/>
+<text x="107" y="62" font-size="14" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB">微信搜索</text>
+<rect x="190" y="40" width="135" height="44" rx="8" fill="#185FA5" stroke="#85B7EB" stroke-width="0.5"/>
+<text x="257" y="62" font-size="14" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB">公众号导流</text>
+<rect x="340" y="40" width="135" height="44" rx="8" fill="#185FA5" stroke="#85B7EB" stroke-width="0.5"/>
+<text x="407" y="62" font-size="14" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB">社交分享</text>
+<rect x="490" y="40" width="135" height="44" rx="8" fill="#185FA5" stroke="#85B7EB" stroke-width="0.5"/>
+<text x="557" y="62" font-size="14" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB">附近小程序</text>
+<line x1="107" y1="88" x2="107" y2="112" stroke="#85B7EB" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="257" y1="88" x2="257" y2="112" stroke="#85B7EB" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="407" y1="88" x2="407" y2="112" stroke="#85B7EB" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="557" y1="88" x2="557" y2="112" stroke="#85B7EB" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="40" y="114" width="600" height="176" rx="20" fill="#0C447C" stroke="#B5D4F4" stroke-width="0.5"/>
+<text x="60" y="140" font-size="14" dominant-baseline="central" fill="#B5D4F4">小程序端 · 原生开发（WXML / WXSS / Skyline 渲染）</text>
+<rect x="60" y="156" width="280" height="112" rx="12" fill="#185FA5" stroke="#85B7EB" stroke-width="0.5"/>
+<text x="200" y="180" font-size="14" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB">主包 ≤ 1.5MB</text>
+<text x="200" y="202" font-size="12" text-anchor="middle" dominant-baseline="central" fill="#85B7EB">首页 · 分类 · 购物车</text>
+<text x="200" y="222" font-size="12" text-anchor="middle" dominant-baseline="central" fill="#85B7EB">我的 · 交易主流程</text>
+<rect x="360" y="156" width="260" height="112" rx="12" fill="#185FA5" stroke="#85B7EB" stroke-width="0.5"/>
+<text x="490" y="180" font-size="14" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB">分包按需加载</text>
+<text x="490" y="202" font-size="12" text-anchor="middle" dominant-baseline="central" fill="#85B7EB">营销页 · 拼团活动</text>
+<text x="490" y="222" font-size="12" text-anchor="middle" dominant-baseline="central" fill="#85B7EB">用户中心 · 订单列表</text>
+<line x1="340" y1="290" x2="340" y2="314" stroke="#9FE1CB" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="40" y="316" width="600" height="144" rx="20" fill="#085041" stroke="#9FE1CB" stroke-width="0.5"/>
+<text x="60" y="342" font-size="14" dominant-baseline="central" fill="#9FE1CB">微信云开发 · 免服务器 / 免域名备案 / 天然过白名单</text>
+<rect x="60" y="358" width="130" height="76" rx="8" fill="#0F6E56" stroke="#5DCAA5" stroke-width="0.5"/>
+<text x="125" y="384" font-size="14" text-anchor="middle" dominant-baseline="central" fill="#E1F5EE">云函数</text>
+<text x="125" y="406" font-size="12" text-anchor="middle" dominant-baseline="central" fill="#5DCAA5">业务 API · 回调</text>
+<rect x="205" y="358" width="130" height="76" rx="8" fill="#0F6E56" stroke="#5DCAA5" stroke-width="0.5"/>
+<text x="270" y="384" font-size="14" text-anchor="middle" dominant-baseline="central" fill="#E1F5EE">云数据库</text>
+<text x="270" y="406" font-size="12" text-anchor="middle" dominant-baseline="central" fill="#5DCAA5">商品·订单·用户</text>
+<rect x="350" y="358" width="130" height="76" rx="8" fill="#0F6E56" stroke="#5DCAA5" stroke-width="0.5"/>
+<text x="415" y="384" font-size="14" text-anchor="middle" dominant-baseline="central" fill="#E1F5EE">云存储</text>
+<text x="415" y="406" font-size="12" text-anchor="middle" dominant-baseline="central" fill="#5DCAA5">图片·静态资源</text>
+<rect x="495" y="358" width="130" height="76" rx="8" fill="#0F6E56" stroke="#5DCAA5" stroke-width="0.5"/>
+<text x="560" y="384" font-size="14" text-anchor="middle" dominant-baseline="central" fill="#E1F5EE">云调用</text>
+<text x="560" y="406" font-size="12" text-anchor="middle" dominant-baseline="central" fill="#5DCAA5">支付·订阅消息</text>
+</g>
+</svg>

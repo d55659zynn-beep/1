@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>液态玻璃按钮预览</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        background: #141416;
+        color: #8a8a92;
+        font: 13px/1.7 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+        padding: 32px 20px;
+      }
+      .screen {
+        position: relative;
+        width: 340px;
+        height: 520px;
+        border-radius: 28px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 35%, #f093fb 70%, #f5576c 100%);
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+      }
+      .bubble {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), rgba(255,255,255,0.04));
+        border: 1px solid rgba(255,255,255,0.15);
+        animation: float 6s ease-in-out infinite alternate;
+      }
+      @keyframes float {
+        from { transform: translate(0, 0) scale(1); }
+        to   { transform: translate(18px, -24px) scale(1.15); }
+      }
+      .row {
+        position: absolute;
+        left: 0; right: 0; top: 44%;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .row + .row { top: 64%; }
+      .glass {
+        position: relative;
+        width: 60px; height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.22);
+        background: radial-gradient(circle at 30% 24%, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.45), inset 0 -1px 0 rgba(255,255,255,0.1);
+        display: flex; align-items: center; justify-content: center;
+        color: rgba(255,255,255,0.86);
+        font-size: 20px;
+        cursor: pointer;
+        transition: transform 0.16s cubic-bezier(0.22, 0.61, 0.36, 1);
+        margin-left: 20px;
+      }
+      .row .glass:first-child { margin-left: 0; }
+      .glass:active { transform: scale(0.92); }
+      .glass::before {
+        content: "";
+        position: absolute;
+        left: -50%; top: -50%;
+        width: 200%; height: 200%;
+        background: linear-gradient(120deg, rgba(255,255,255,0) 38%, rgba(255,255,255,0.42) 50%, rgba(255,255,255,0) 62%);
+        animation: sheen 3s linear infinite;
+        pointer-events: none;
+      }
+      @keyframes sheen {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+      }
+      .glass span { position: relative; z-index: 2; }
+      .glass--pill { width: 168px; border-radius: 22px; font-size: 15px; letter-spacing: 2px; }
+      .hint { text-align: center; max-width: 420px; }
+      .hint b { color: #d8d8de; font-weight: 500; }
+    </style>
+  </head>
+  <body>
+    <div class="screen">
+      <div class="bubble" style="width:80px;height:80px;left:24px;top:60px;animation-delay:0s"></div>
+      <div class="bubble" style="width:110px;height:110px;left:210px;top:110px;animation-delay:.8s"></div>
+      <div class="bubble" style="width:60px;height:60px;left:60px;top:300px;animation-delay:1.6s"></div>
+      <div class="bubble" style="width:130px;height:130px;left:190px;top:340px;animation-delay:2.4s"></div>
+      <div class="bubble" style="width:70px;height:70px;left:20px;top:190px;animation-delay:3.2s"></div>
+
+      <div class="row">
+        <button class="glass"><span>藏</span></button>
+        <button class="glass"><span>赞</span></button>
+        <button class="glass"><span>享</span></button>
+      </div>
+      <div class="row">
+        <button class="glass glass--pill"><span>立即分享</span></button>
+      </div>
+    </div>
+
+    <p class="hint">
+      <b>液态玻璃按钮</b>：旋转扫光高光 + 背景模糊 + 1px 白色描边 + 顶部镜面内高光，按压缩放至 0.92。<br />
+      与 Flutter / 小程序实现使用同一套参数（blur 8、白色 22% 描边、径向渐变 30%→10%）。
+    </p>
+  </body>
+</html>

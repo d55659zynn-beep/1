@@ -1,0 +1,35 @@
+<view class="page">
+  <!-- 浮动气泡，营造液态背景 -->
+  <view
+    wx:for="{{bubbles}}"
+    wx:key="id"
+    class="bubble"
+    style="width:{{item.size}}rpx;height:{{item.size}}rpx;left:{{item.left}}rpx;top:{{item.top}}rpx;animation-delay:{{item.delay}}s;animation-duration:{{item.duration}}s"
+  />
+
+  <view class="row">
+    <liquid-glass-button size="{{120}}" bg-src="{{bgSrc}}" bind:tap="onFav">
+      <text class="btn-text">藏</text>
+    </liquid-glass-button>
+
+    <liquid-glass-button size="{{120}}" bg-src="{{bgSrc}}" bind:tap="onStar">
+      <text class="btn-text">赞</text>
+    </liquid-glass-button>
+
+    <liquid-glass-button size="{{120}}" bg-src="{{bgSrc}}" bind:tap="onShare">
+      <text class="btn-text">享</text>
+    </liquid-glass-button>
+  </view>
+
+  <view class="row row--wide">
+    <liquid-glass-button
+      size="{{220}}"
+      radius="{{32}}"
+      blur="{{16}}"
+      bg-src="{{bgSrc}}"
+      bind:tap="onShare"
+    >
+      <text class="btn-text btn-text--lg">立即分享</text>
+    </liquid-glass-button>
+  </view>
+</view>
