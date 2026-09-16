@@ -21,7 +21,8 @@
       "name": "admin",
       "pages": [
         "pages/goods-list/index",
-        "pages/goods-edit/index"
+        "pages/goods-edit/index",
+        "pages/order-manage/index"
       ]
     }
   ],

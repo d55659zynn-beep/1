@@ -46,7 +46,7 @@
 
 ## 四、本次追加：电商小程序 MVP 与 iOS 原型
 
-- `deliverables/eshop-miniprogram/`：可运行的电商小程序骨架（73 个文件），含商家后台上架商品流程，详见该目录下的 `README.md`
+- `deliverables/eshop-miniprogram/`：可运行的电商小程序骨架（82 个文件），含商家后台上架商品流程与订阅消息（发货通知召回）闭环，详见该目录下的 `README.md`
 - `deliverables/prototypes/eshop-ios-prototype.html`：iPhone 15 Pro Max 高保真原型（暗色玻璃拟态 + 霓虹渐变，底部导航固底）
 - `deliverables/prototypes/pelican-cycling.html`：SVG 鹈鹕骑自行车 2D 动画
 - `CHANGELOG.md`：每次交付后的更新记录

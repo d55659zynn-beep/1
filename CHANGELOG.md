@@ -29,8 +29,15 @@
 - `deliverables/prototypes/pelican-cycling.html`：SVG + CSS 的鹈鹕骑自行车 2D 动画（可暂停）
 - `tools/`：GitHub REST API 上传脚本、Git 推送脚本、图标生成脚本
 
+### 6. 订阅消息闭环（发货通知召回）
+- 新增云函数 `subscribe`：`grant`（支付成功记一次下发额度）、`sendShip`（商家发货校验额度→发订阅消息→改状态→扣额度）、`send`（主动召回扩展）
+- 小程序端：支付结果页 `pay-result` 支付成功后弹授权框；`utils/config.js` 存模板 ID 并做「未配置则跳过」；`mine` 页新增「订单管理（发货通知）」入口
+- 商家后台 `subpackages/admin/order-manage`：按状态查订单、填快递公司与单号一键发货并触发服务通知；`order` 云函数新增 `adminList`
+- 闭环：支付成功 → 申请授权 → 记录额度 → 商家发货 → 下发通知 → 扣减额度（一次性订阅，额度为 0 时提示「买家未授权」）
+- 修复 `mine` 页「我的订单 / 商品管理」跳转路径（原指向不存在的 `orders/orders`、`goods-list/goods-list`）
+- `eshop-miniprogram/README.md` 新增「四、接订阅消息」配置步骤，并同步目录结构与边界清单
+
 ### 待办
 - SKU 多规格
 - 优惠券 / 新人券
-- 订阅消息（支付成功后授权发货通知）
 - 物流与售后、数据看板

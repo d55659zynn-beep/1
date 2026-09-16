@@ -1,0 +1,75 @@
+.page {
+  padding: 20rpx 24rpx 60rpx;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 20rpx;
+}
+
+.tabs__item {
+  padding: 12rpx 30rpx;
+  margin-right: 16rpx;
+  background: #fff;
+  border-radius: 30rpx;
+  color: #5f646b;
+  font-size: 26rpx;
+}
+
+.tabs__item.on {
+  background: #e0533d;
+  color: #fff;
+}
+
+.order {
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.status {
+  color: #e0533d;
+  font-size: 25rpx;
+}
+
+.goods {
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  color: #1f2329;
+}
+
+.addr {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #5f646b;
+  line-height: 1.6;
+}
+
+.quota {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: #8a8f98;
+}
+
+.input {
+  margin-top: 16rpx;
+  padding: 18rpx 20rpx;
+  background: #f5f6f8;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+}
+
+.btn {
+  margin-top: 20rpx;
+  padding: 18rpx;
+  text-align: center;
+  border-radius: 12rpx;
+  background: #e0533d;
+  color: #fff;
+  font-size: 27rpx;
+}
+
+.express {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #8a8f98;
+}

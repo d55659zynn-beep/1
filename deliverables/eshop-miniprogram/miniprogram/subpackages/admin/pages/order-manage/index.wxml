@@ -1,0 +1,47 @@
+<view class="page">
+  <view class="tabs">
+    <view class="tabs__item {{active === 'paid' ? 'on' : ''}}" data-key="paid" bindtap="onTab">待发货</view>
+    <view class="tabs__item {{active === 'shipped' ? 'on' : ''}}" data-key="shipped" bindtap="onTab">已发货</view>
+    <view class="tabs__item {{active === 'all' ? 'on' : ''}}" data-key="all" bindtap="onTab">全部</view>
+  </view>
+
+  <view class="card order" wx:for="{{list}}" wx:key="_id">
+    <view class="row between">
+      <text class="muted">{{item.orderNo}}</text>
+      <text class="status">{{item.status === 'paid' ? '待发货' : (item.status === 'shipped' ? '已发货' : item.status)}}</text>
+    </view>
+
+    <view class="goods" wx:for="{{item.items}}" wx:for-item="g" wx:key="productId">
+      {{g.title}} × {{g.quantity}}
+    </view>
+
+    <view class="addr" wx:if="{{item.address}}">
+      {{item.address.name}} {{item.address.phone}} · {{item.address.detail}}
+    </view>
+
+    <view class="quota">订阅额度 {{item.subscribeQuota || 0}}（买家授权一次可通知一条）</view>
+
+    <block wx:if="{{item.status === 'paid'}}">
+      <input
+        class="input"
+        placeholder="快递公司"
+        value="{{forms[item._id].company}}"
+        data-id="{{item._id}}"
+        data-field="company"
+        bindinput="onInput"
+      />
+      <input
+        class="input"
+        placeholder="快递单号"
+        value="{{forms[item._id].no}}"
+        data-id="{{item._id}}"
+        data-field="no"
+        bindinput="onInput"
+      />
+      <view class="btn" data-id="{{item._id}}" bindtap="onShip">确认发货并通知买家</view>
+    </block>
+    <view class="express" wx:else>快递：{{item.express.company}} {{item.express.no}}</view>
+  </view>
+
+  <view class="empty" wx:if="{{!list.length}}">暂无订单</view>
+</view>

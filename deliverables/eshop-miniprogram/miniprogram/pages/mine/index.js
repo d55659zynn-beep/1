@@ -17,7 +17,7 @@ Page({
   },
 
   goOrders() {
-    wx.navigateTo({ url: '/subpackages/trade/pages/orders/orders' })
+    wx.navigateTo({ url: '/subpackages/trade/pages/orders/index' })
   },
 
   goAdmin() {
@@ -28,7 +28,18 @@ Page({
         showCancel: false
       })
     }
-    wx.navigateTo({ url: '/subpackages/admin/pages/goods-list/goods-list' })
+    wx.navigateTo({ url: '/subpackages/admin/pages/goods-list/index' })
+  },
+
+  goOrderManage() {
+    if (!this.data.isAdmin) {
+      return wx.showModal({
+        title: '未开通管理权限',
+        content: '在云开发控制台 - 数据库 - users 集合，把当前用户的 isAdmin 改为 true 即可',
+        showCancel: false
+      })
+    }
+    wx.navigateTo({ url: '/subpackages/admin/pages/order-manage/index' })
   },
 
   onShareAppMessage() {

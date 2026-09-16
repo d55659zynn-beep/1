@@ -16,6 +16,10 @@
       <text>商品管理（上架 / 下架）</text>
       <text class="menu__arrow">›</text>
     </view>
+    <view class="menu__item" bindtap="goOrderManage">
+      <text>订单管理（发货通知）</text>
+      <text class="menu__arrow">›</text>
+    </view>
     <view class="menu__item menu__item--plain">
       <text>客服与售后</text>
       <text class="muted">工作日 9:00 - 18:00</text>

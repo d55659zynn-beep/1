@@ -71,6 +71,18 @@ exports.main = async (event) => {
       return { code: 0, data: res.data }
     }
 
+    // 商家后台：查看全部订单（需管理员）
+    if (action === 'adminList') {
+      const me = await db.collection('users').where({ _openid: OPENID }).limit(1).get()
+      if (!me.data[0] || !me.data[0].isAdmin) {
+        return { code: 403, message: '无权限：请先把自己设为管理员' }
+      }
+      const where = {}
+      if (event.status && event.status !== 'all') where.status = event.status
+      const res = await orders.where(where).orderBy('createTime', 'desc').limit(50).get()
+      return { code: 0, data: res.data }
+    }
+
     if (action === 'detail') {
       const res = await orders.doc(event.id).get()
       return { code: 0, data: res.data }
