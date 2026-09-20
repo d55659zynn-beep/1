@@ -47,3 +47,10 @@
 - 自动同步到 GitHub 仓库 d55659zynn-beep/1 main 分支，共 101 个文件
   - 新增：CHANGELOG.md、deliverables/eshop-miniprogram/cloudfunctions/cart/index.js、deliverables/eshop-miniprogram/cloudfunctions/cart/package.json、deliverables/eshop-miniprogram/cloudfunctions/login/index.js、deliverables/eshop-miniprogram/cloudfunctions/login/package.json、deliverables/eshop-miniprogram/cloudfunctions/order/index.js、deliverables/eshop-miniprogram/cloudfunctions/order/package.json、deliverables/eshop-miniprogram/cloudfunctions/pay/index.js、deliverables/eshop-miniprogram/cloudfunctions/pay/package.json、deliverables/eshop-miniprogram/cloudfunctions/payCallback/index.js、deliverables/eshop-miniprogram/cloudfunctions/payCallback/package.json、deliverables/eshop-miniprogram/cloudfunctions/product/index.js 等 101 项
   - 提交：7209585
+
+## 2026-09-20
+
+- 自动同步到 GitHub 仓库 d55659zynn-beep/1 main 分支，共 101 个文件
+  - 新增：deliverables/eshop-miniprogram/上架指南.md、deliverables/小程序架构设计-电商云开发版.md、docs/对话记录.md
+  - 删除：docs/瀵硅瘽璁板綍.md、deliverables/灏忕▼搴忔灦鏋勮璁?鐢靛晢浜戝紑鍙戠増.md、deliverables/eshop-miniprogram/涓婃灦鎸囧崡.md
+  - 提交：e7aa67a
