@@ -51,6 +51,6 @@
 ## 2026-09-20
 
 - 自动同步到 GitHub 仓库 d55659zynn-beep/1 main 分支，共 101 个文件
-  - 新增：deliverables/eshop-miniprogram/上架指南.md、deliverables/小程序架构设计-电商云开发版.md、docs/对话记录.md
-  - 删除：docs/瀵硅瘽璁板綍.md、deliverables/灏忕▼搴忔灦鏋勮璁?鐢靛晢浜戝紑鍙戠増.md、deliverables/eshop-miniprogram/涓婃灦鎸囧崡.md
-  - 提交：e7aa67a
+  - 修复同步脚本读取上次清单时的编码问题（旧清单按 ANSI 解码，中文文件名被误判为「新增 + 删除」）
+  - 实际交付内容无增删改，本次为修正编码后的校验性同步（提交 e7aa67a、899ed09）
+  - 修正后再次比对已正确识别为「无变更」
